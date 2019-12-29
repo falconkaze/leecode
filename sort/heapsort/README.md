@@ -73,4 +73,84 @@
 
 ### HEAPSORT（堆排序算法）
 
+    堆排序包括三个关键步骤：
 
+    a. 建堆
+
+    b. 交换根结点（第一个元素）和最后一个元素的位置
+
+    c. 构造新的堆（去除最后一个元素的堆），并重复 b 和 c
+
+    ```
+    HEAPSORT(A)
+        BUILD-MAX-HEAP(A)
+        for i = A.length - 1 downto 1
+            exchange A[0] with A[i]
+            A.heap-size = A.heap-size - 1
+            MAX-HEAPIFY(A, 0)
+    ```
+
+## 优先队列
+
+    优先队列是一种用来维护由一组元素构成的集合 S 的数据结构，其中的每个元素都有一个相关的值，称为关键字（key）。
+
+    优先队列分为最大优先队列和最小优先队列。一个最大优先队列支持以下操作：
+
+    a. INSERT(S, x)：把元素 x 插入集合 S 中。
+
+    b. MAXIMUM(S)：返回 S 中具有最大 key 的元素。
+
+    c. EXTRACT-MAX(S)：去掉并返回 S 中具有最大 key 的元素。
+
+    d. INCREASE-KEY(S, x, k)：将元素 x 的 key 值增加dao k，这里假设 k 的值不小于 x 原先的值。
+
+    最大优先队列的一个典型应用就是：在共享计算机系统中的作业调度，可以随时添加新作业，并可以选出集合中最高优先级的作业。最小优先队列可以被用于基于事件驱动的模拟器，事件的发生时间作为 key，事件必须按照发生的时间顺序进行模拟，因为一个某一时间的模拟结果可能会出发对其他事件的模拟。
+
+### HEAP-MAXIMUM
+
+    ```
+    HEAP-MAXIMUM(A)
+        return A[0]
+    ```
+
+### HEAP-EXTRACT-MAX
+
+    ```
+    HEAP-EXTRACT-MAX(A)
+        if A.heap-size < 1
+            error "heap underflow"
+        max = A[0]
+        A[0] = A[A.heap-size - 1]
+        A.heap-size -= 1
+        MAX-HEAPIFY(A, 0)
+        return max
+    ```
+
+    时间复杂度 O(lgn)。
+
+### HEAP-INCREASE-KEY
+
+    ```
+    HEAP-INCREASE-KEY(A, i, key)
+        if key < A[i]
+            error "new key is smaller than current key"
+        A[i] = key
+        while i > 0 and A[PARENT(i)] < A[i]
+            exchange A[i] with A[PARENT(i)]
+            i = PARENT(i)
+    ```
+
+    时间复杂度为 O(lgn)。
+
+### MAX-HEAP-INSERT
+
+    MAX-HEAP-INSERT 首先通过增加一个 key 为 MIN_VALUE 的叶结点来扩展最大堆，然后调用 HEAP-INCRESE-KEY 为新结点设置对应的关键字，同时维持最大堆的性质。
+
+    ```
+    MAX-HEAP-INSERT(A, key)
+        A.heap-size = A.heap-size + 1
+        A[A.heap-size - 1] = MIN_VALUE
+        HEAP-INCREMENT-KEY(A, A.heap-size - 1, key)
+    ```
+
+    在一个包含 n 个元素的堆中，所有优先队列的操作都可以在 O(lgn) 内完成。
