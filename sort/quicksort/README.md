@@ -28,6 +28,15 @@
         return i + 1
     ```
 
+    如果始终使用 A[r] 作为主元，就会导致某些特定序列的时间复杂度很高。为此，可以加入随机元素，随机选择主元。
+
+    ```
+    PARTITION_RANDOM(A, p, r)
+        i = RANDOM(p, r)
+        exchange A[r] with A[i]
+        return PARTITION(A, p, r)
+    ```
+
 ## 算法特点
 
     快速排序的期望时间复杂度是 O(nlgn)，最差时间复杂度是 O(n^2)，能够进行原址排序。
